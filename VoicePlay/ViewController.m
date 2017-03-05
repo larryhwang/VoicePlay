@@ -45,9 +45,10 @@ typedef NS_OPTIONS(NSInteger, Status) {
 @property (nonatomic, assign) Status state;
 @property (nonatomic, assign) SynthesizeType synType;
 @property (nonatomic, strong) IFlySpeechSynthesizer * iFlySpeechSynthesizer;
+@property (nonatomic,strong) NSTimer  *netReqTimer;
 @property(nonatomic,copy)   NSString *VoiceTTS;
 
-@property (strong ,nonatomic) NSMutableData *ServerData;  //返回的数据
+
 
 @end
 
@@ -64,74 +65,53 @@ typedef NS_OPTIONS(NSInteger, Status) {
     [self.view addSubview:NetRqBtn];
     [NetRqBtn addTarget:self action:@selector(testNet) forControlEvents:UIControlEventTouchUpInside];
     
-    
-    
-    
-    //添加通知测试
-  //  [self registerNotification:16];
+
     
     //pcm播放器初始化
     _audioPlayer = [[PcmPlayer alloc] init];
     [self initSynthesizer];
-  //  [self testPlayVoice];   //播放声音
+    
     
     [self testNet];
     
-    //[self setTimer];
-   // [self dataDeal];
+    [self setTimer];
+
     
 
     
 }
 
-
-
--(void)dataDeal {
-    NSString *string1 = @"012022031042054";  //15个
-    NSMutableString *ResStr = [NSMutableString stringWithFormat:@"%@",string1];
-    NSString *preTTSStr = @"";
-    NSString *resString = nil;
-    NSString *tempStr   = nil;
-    int Total = (int)[string1 length];
-    //01[p100]2[p500] [p500]
-    for (int a=0; a<Total; a++) {
-        if (a==0) {
-            tempStr = [string1 substringToIndex:1];;
-        } else {
-            tempStr = [string1 substringWithRange:NSMakeRange(a, a)];
-            
-            NSString  *string3 = [string1 substringFromIndex:a];
-            tempStr = [string3 substringToIndex:1];
-        }
-        NSLog(@"fangwei : %d ,%d %@",a,a,tempStr);
-        preTTSStr = [preTTSStr stringByAppendingString:tempStr];
-        if ((a+1)%3 ==0 && a!=0) {
-            preTTSStr = [preTTSStr stringByAppendingString:@"[p500]"];
-        } else {
-            preTTSStr = [preTTSStr stringByAppendingString:@"[p100]"];
-        }
-    }
-    NSLog(@"重组之后：%@",preTTSStr);
-    self.VoiceTTS = preTTSStr;
-    [self testPlayVoice];
-}
 
 -(void)setTimer {
-  [NSTimer scheduledTimerWithTimeInterval:5.0 target:self selector:@selector(testNet) userInfo:nil repeats:YES];
+  self.netReqTimer = [NSTimer scheduledTimerWithTimeInterval:5.0 target:self selector:@selector(testNet) userInfo:nil repeats:YES];
 }
 
 
 -(void)testNet {
-   // NSString *urtString = @"http://www.weather.com.cn/data/sk/101010100.html";
-     //NSString *urtString = @"112.74.35.79/index.html";
-    //NSString *urtString = @"http://112.74.35.79/Request.php";
-    NSString *urtString = @"http://127.0.0.1/Request.php";
+    NSString *urtString = @"http://112.74.35.79/Request.php";
     NSURL *url = [NSURL URLWithString:urtString];    //字符串转URL
     NSURLSession *session = [NSURLSession sharedSession];
     NSURLSessionTask *task = [session dataTaskWithURL:url
                                     completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-                                        NSLog(@"返回的数据%@", [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil]);
-                                        NSLog(@"%@",error);
+                                    NSDictionary *dataDic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+                                        if ([[dataDic objectForKey:@"sucess"] integerValue]==1) {
+                                            NSLog(@"接受到数据");
+                                            // 1、停止循环器
+                                            [self.netReqTimer invalidate];
+                                            //2、合成最后的播放字符串
+                                            self.VoiceTTS = [dataDic objectForKey:@"data"];
+//                                            self.VoiceTTS = @"1[p20000]A[p1000]C[p1000]F[p1000]F[p1000]B[p1000]2[p20000]B[p1000]B[p1000]F[p1000]A[p1000]C[p1000]10[p20000]A[p1000]A[p1000]C[p1000]C[p1000]B[p1000]19[p20000]B[p1000]B[p1000]C[p1000]A[p1000]C";
+                                            
+                                            self.VoiceTTS = [self cleanData:[dataDic objectForKey:@"data"]];
+                                           [self testPlayVoice];
+                                            //3. 开辟线程推送到AppWatch
+                                            //    NSString* str= @"01[p100]2[p1000] [p500]  01[p100]2[p500] [p500]  02[p100]4[p500] [p500]   02[p100]4[p500] [p500]   03[p100]2[p500] [p500] 03[p100]2[p500]";
+
+                                            //4.屏幕显示数据
+                                        }else {
+                                            NSLog(@"无数据");
+                                        }
+                                    
                                     }];
     // 启动任务
     [task resume];
@@ -153,10 +133,7 @@ typedef NS_OPTIONS(NSInteger, Status) {
     
     NSString* str= @"01[p100]2[p500] [p500]  01[p100]2[p500] [p500]  02[p100]4[p500] [p500]   02[p100]4[p500] [p500]   03[p100]2[p500] [p500] 03[p100]2[p500]";
     
-   // NSString  *TS = [NSString stringWithFormat:@"惠州市峰华经纬科技有限公司"];
-    
-     NSString  *TS = [NSString stringWithFormat:@"Hello World"];
-     
+
     
     
     
@@ -164,7 +141,6 @@ typedef NS_OPTIONS(NSInteger, Status) {
     if (_iFlySpeechSynthesizer.isSpeaking) {
         _state = Playing;
     }
-
 }
 
 
@@ -233,43 +209,86 @@ typedef NS_OPTIONS(NSInteger, Status) {
         textSample=NSLocalizedStringFromTable(@"text_chinese", @"tts/tts", nil);
         
     }
-    NSString *textStr = NSLocalizedStringFromTable(@"0 <break time=”2000ms”/>2[p500]3 [p500] ",@"tts/tts",nil);
-}
-
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-
-
-#pragma mark netDelegate
-
-// 1.得到接到服务器的响应第一个执行的方法，服务器要传送数据   初始化接受过来的数据
--(void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response {
     
 }
 
-//2.接受服务器数据
--(void)connection:(NSURLConnection *) connection didReceiveData:(NSData *)data {
-    [self.ServerData  appendData:data];    //不断接受数据，可能多次执行
-}
 
-//3.数据接受完成后，做后续处理
--(void) connectionDidFinishLoading:(NSURLConnection *)connection {
-    NSLog(@"has receive data");
-    NSString *str = [[NSString alloc]initWithData:self.ServerData encoding:NSUTF8StringEncoding];
-    NSLog(@"%@",str);    //打印服务器返回信息
+//JSON 转字典
+- (NSDictionary *)dictionaryWithJsonString:(NSString *)jsonString {
     
-   // UIAlertView *alertView = self.ServerData = nil;   //清理数据
+    if (jsonString == nil) {
+        
+        return nil;
+        
+    }
+    
+    NSData *jsonData = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
+    NSError *err;
+    NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:jsonData
+                         
+                                                        options:NSJSONReadingMutableContainers
+                         
+                                                          error:&err];
+    
+    if(err) {
+        
+        NSLog(@"json解析失败：%@",err);
+        
+        return nil;
+        
+    }
+    
+    return dic;
+    
 }
 
-//4.获取网络错误时的信息
--(void)connection:(NSURLConnection *) connection diFailWithError : (NSError *) error{
-    NSLog(@"网络请求错误:%@",error.localizedDescription);
+
+//随机生成数组，用于听力训练
+-(void)RandomTool {
+    
 }
-
-
-
+    
+    
+-(NSString *)cleanData:(NSString *)rawData {
+    //1ABCD10AACCD22BBDDC
+    NSMutableString  *cleanData = [NSMutableString new];
+    NSInteger alength = [rawData length];
+    
+    NSLog(@"Raw:%@",rawData);
+    for (int i = 0; i<alength; i++) {
+        char commitChar = [rawData characterAtIndex:i];
+        NSString *temp;
+        if(commitChar ==68) {
+           temp = @"F";
+        }else {
+           temp = [rawData substringWithRange:NSMakeRange(i,1)];
+        }
+        
+        if(commitChar>64) {
+          //  NSLog(@"字母");
+            [cleanData appendString:temp];
+            [cleanData appendString:@"[p1300]"];
+            
+        }else if((commitChar>47)&&(commitChar<58)){
+          //  NSLog(@"数字");
+            [cleanData appendString:temp];
+            if(i>0) {
+                char preChar = [rawData characterAtIndex:(i - 1)];
+                char nxtChar = [rawData characterAtIndex:(i + 1)];
+                if(((nxtChar>47)&&(nxtChar<58))&&(preChar>64)) {  //如果下一个是数字，前者是字母 则不佳
+                    
+                }else {
+                   [cleanData appendString:@"[p5000]"];
+                }
+            } else{  //end if(i-1)>0
+                //首位的情况
+                [cleanData appendString:@"[p5000]"];
+            }
+        }
+    }
+    
+    NSLog(@"cleanData:%@",cleanData);
+        return cleanData;
+}
+    
 @end

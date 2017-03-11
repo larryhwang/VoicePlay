@@ -109,7 +109,7 @@ typedef NS_OPTIONS(NSInteger, Status) {
                                             //2、合成最后的播放字符串
                                             
                                             self.VoiceTTS = [self cleanData:[dataDic objectForKey:@"data"]];
-                                           [self testPlayVoice];
+                                            [self testPlayVoice];
                                             
                                             
                                             //4.屏幕显示数据

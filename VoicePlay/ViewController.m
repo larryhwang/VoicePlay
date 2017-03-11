@@ -43,13 +43,14 @@ typedef NS_OPTIONS(NSInteger, Status) {
 @property (nonatomic, assign) BOOL isCanceled;
 @property (nonatomic, assign) BOOL hasError;
 @property (nonatomic, assign) BOOL isViewDidDisappear;
+@property (nonatomic, assign) BOOL CopyBool;  //是否完成重复标志
 @property (nonatomic, assign) Status state;
 @property (nonatomic, assign) SynthesizeType synType;
 @property (nonatomic, strong) IFlySpeechSynthesizer * iFlySpeechSynthesizer;
 @property (nonatomic,strong)  NSTimer  *netReqTimer;
 @property(nonatomic,copy)     NSString *VoiceTTS;
 @property(nonatomic,copy)     NSString *RawData;
-@property(nonatomic,copy)     NSMutableString *GroupCopy;  //用于重复的组数据
+//@property(nonatomic,copy)     NSMutableString *GroupCopy;  //用于重复的组数据
 
 
 
@@ -70,7 +71,8 @@ typedef NS_OPTIONS(NSInteger, Status) {
     
 
     //组数据初始化
-    _GroupCopy = [NSMutableString new];
+   // _GroupCopy = [NSMutableString new];
+    _CopyBool  = NO ;
     
     //pcm播放器初始化
     _audioPlayer = [[PcmPlayer alloc] init];
@@ -253,6 +255,7 @@ typedef NS_OPTIONS(NSInteger, Status) {
 -(NSString *)cleanData:(NSString *)rawData {
     //1ABCD10AACCD22BBDDC
     NSMutableString  *cleanData = [NSMutableString new];
+    NSMutableString  *GroupCopy = [NSMutableString new];
     NSInteger alength = [rawData length];
     
     NSLog(@"Raw:%@",rawData);
@@ -267,11 +270,28 @@ typedef NS_OPTIONS(NSInteger, Status) {
         
         if(commitChar>64) {
           //  NSLog(@"字母");
+            [GroupCopy appendString:temp];
+            [GroupCopy appendString:@"[p200]"];
+            
             [cleanData appendString:temp];
-            [cleanData appendString:@"[p1300]"];
+            [cleanData appendString:@"[p1000]"];
+            
+            if (i == alength-1) {
+                [cleanData appendString:@"[p2000]"];
+                [cleanData appendString:GroupCopy];
+            }
             
         }else if((commitChar>47)&&(commitChar<58)){
           //  NSLog(@"数字");
+            
+            if ((_CopyBool == NO)&&(i>1)) {  //添加重复
+                [cleanData appendString:@"[p2000]"];
+                [cleanData appendString:GroupCopy];
+                [cleanData appendString:@"[p2000]"];
+                GroupCopy = [NSMutableString new]; //添加完一组后置空
+                _CopyBool = YES;
+            }
+            
             [cleanData appendString:temp];
             if(i>0) {
                 char preChar = [rawData characterAtIndex:(i - 1)];
@@ -279,11 +299,13 @@ typedef NS_OPTIONS(NSInteger, Status) {
                 if(((nxtChar>47)&&(nxtChar<58))&&(preChar>64)) {  //如果下一个是数字，前者是字母 则不添加
                     
                 }else {
-                   [cleanData appendString:@"[p5000]"];  //组与组之间的间隔添加
+                   [cleanData appendString:@"[p4000]"];  //组与组之间的间隔添加
+           
+                    _CopyBool = NO ;
                 }
             } else{  //end if(i-1)>0
                 //首位的情况
-                [cleanData appendString:@"[p5000]"];
+                [cleanData appendString:@"[p4000]"];
             }
         }
     }

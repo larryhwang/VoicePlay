@@ -39,14 +39,17 @@ typedef NS_OPTIONS(NSInteger, Status) {
 
 @property (nonatomic, strong) PcmPlayer *audioPlayer;
 @property (nonatomic, strong) PopupView *popUpView;
+@property (nonatomic, strong) UILabel *TEST;
 @property (nonatomic, assign) BOOL isCanceled;
 @property (nonatomic, assign) BOOL hasError;
 @property (nonatomic, assign) BOOL isViewDidDisappear;
 @property (nonatomic, assign) Status state;
 @property (nonatomic, assign) SynthesizeType synType;
 @property (nonatomic, strong) IFlySpeechSynthesizer * iFlySpeechSynthesizer;
-@property (nonatomic,strong) NSTimer  *netReqTimer;
-@property(nonatomic,copy)   NSString *VoiceTTS;
+@property (nonatomic,strong)  NSTimer  *netReqTimer;
+@property(nonatomic,copy)     NSString *VoiceTTS;
+@property(nonatomic,copy)     NSString *RawData;
+@property(nonatomic,copy)     NSMutableString *GroupCopy;  //用于重复的组数据
 
 
 
@@ -66,6 +69,8 @@ typedef NS_OPTIONS(NSInteger, Status) {
     [NetRqBtn addTarget:self action:@selector(testNet) forControlEvents:UIControlEventTouchUpInside];
     
 
+    //组数据初始化
+    _GroupCopy = [NSMutableString new];
     
     //pcm播放器初始化
     _audioPlayer = [[PcmPlayer alloc] init];
@@ -83,7 +88,7 @@ typedef NS_OPTIONS(NSInteger, Status) {
 
 
 -(void)setTimer {
-  self.netReqTimer = [NSTimer scheduledTimerWithTimeInterval:5.0 target:self selector:@selector(testNet) userInfo:nil repeats:YES];
+  self.netReqTimer = [NSTimer scheduledTimerWithTimeInterval:20 target:self selector:@selector(testNet) userInfo:nil repeats:YES];
 }
 
 
@@ -96,17 +101,15 @@ typedef NS_OPTIONS(NSInteger, Status) {
                                     NSDictionary *dataDic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
                                         if ([[dataDic objectForKey:@"sucess"] integerValue]==1) {
                                             NSLog(@"接受到数据");
+                                            self.RawData = [dataDic objectForKey:@"data"];
                                             // 1、停止循环器
                                             [self.netReqTimer invalidate];
                                             //2、合成最后的播放字符串
-                                            self.VoiceTTS = [dataDic objectForKey:@"data"];
-//                                            self.VoiceTTS = @"1[p20000]A[p1000]C[p1000]F[p1000]F[p1000]B[p1000]2[p20000]B[p1000]B[p1000]F[p1000]A[p1000]C[p1000]10[p20000]A[p1000]A[p1000]C[p1000]C[p1000]B[p1000]19[p20000]B[p1000]B[p1000]C[p1000]A[p1000]C";
                                             
                                             self.VoiceTTS = [self cleanData:[dataDic objectForKey:@"data"]];
                                            [self testPlayVoice];
-                                            //3. 开辟线程推送到AppWatch
-                                            //    NSString* str= @"01[p100]2[p1000] [p500]  01[p100]2[p500] [p500]  02[p100]4[p500] [p500]   02[p100]4[p500] [p500]   03[p100]2[p500] [p500] 03[p100]2[p500]";
-
+                                            
+                                            
                                             //4.屏幕显示数据
                                         }else {
                                             NSLog(@"无数据");
@@ -115,6 +118,11 @@ typedef NS_OPTIONS(NSInteger, Status) {
                                     }];
     // 启动任务
     [task resume];
+}
+
+
+-(void)sendMsgToWatch {
+    
 }
 
 
@@ -131,19 +139,12 @@ typedef NS_OPTIONS(NSInteger, Status) {
     
     _iFlySpeechSynthesizer.delegate = self;
     
-    NSString* str= @"01[p100]2[p500] [p500]  01[p100]2[p500] [p500]  02[p100]4[p500] [p500]   02[p100]4[p500] [p500]   03[p100]2[p500] [p500] 03[p100]2[p500]";
-    
-
-    
-    
     
     [_iFlySpeechSynthesizer startSpeaking:self.VoiceTTS];
     if (_iFlySpeechSynthesizer.isSpeaking) {
         _state = Playing;
     }
 }
-
-
 
 - (BOOL)shouldAutorotate{
     return NO;
@@ -258,7 +259,7 @@ typedef NS_OPTIONS(NSInteger, Status) {
     for (int i = 0; i<alength; i++) {
         char commitChar = [rawData characterAtIndex:i];
         NSString *temp;
-        if(commitChar ==68) {
+        if(commitChar ==68) {  //把D换成F
            temp = @"F";
         }else {
            temp = [rawData substringWithRange:NSMakeRange(i,1)];
@@ -275,10 +276,10 @@ typedef NS_OPTIONS(NSInteger, Status) {
             if(i>0) {
                 char preChar = [rawData characterAtIndex:(i - 1)];
                 char nxtChar = [rawData characterAtIndex:(i + 1)];
-                if(((nxtChar>47)&&(nxtChar<58))&&(preChar>64)) {  //如果下一个是数字，前者是字母 则不佳
+                if(((nxtChar>47)&&(nxtChar<58))&&(preChar>64)) {  //如果下一个是数字，前者是字母 则不添加
                     
                 }else {
-                   [cleanData appendString:@"[p5000]"];
+                   [cleanData appendString:@"[p5000]"];  //组与组之间的间隔添加
                 }
             } else{  //end if(i-1)>0
                 //首位的情况

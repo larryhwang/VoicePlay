@@ -12,5 +12,6 @@
 @interface TableCell : NSObject
 
 @property (unsafe_unretained, nonatomic) IBOutlet WKInterfaceLabel *DDLable;
+@property (unsafe_unretained, nonatomic) IBOutlet WKInterfaceLabel *NoLable;
 
 @end

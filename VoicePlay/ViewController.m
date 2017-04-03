@@ -17,6 +17,7 @@
 #import <UserNotifications/UserNotifications.h>
 #import "TTSConfig.h"
 #import "AFNetworking.h"
+#import <WatchConnectivity/WatchConnectivity.h>
 
 
 
@@ -35,7 +36,7 @@ typedef NS_OPTIONS(NSInteger, Status) {
 };
 
 
-@interface ViewController ()<IFlySpeechSynthesizerDelegate,NSURLConnectionDataDelegate>
+@interface ViewController ()<IFlySpeechSynthesizerDelegate,NSURLConnectionDataDelegate,WCSessionDelegate>
 
 @property (nonatomic, strong) PcmPlayer *audioPlayer;
 @property (nonatomic, strong) PopupView *popUpView;
@@ -61,7 +62,6 @@ typedef NS_OPTIONS(NSInteger, Status) {
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor grayColor];
-    
     UIButton *NetRqBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 50, 20)];
     NetRqBtn.backgroundColor = [UIColor blueColor];
     NetRqBtn.titleLabel.text  = @"请求一次信息";
@@ -77,7 +77,6 @@ typedef NS_OPTIONS(NSInteger, Status) {
     //pcm播放器初始化
     _audioPlayer = [[PcmPlayer alloc] init];
     [self initSynthesizer];
-    
     
     [self testNet];
     
@@ -109,7 +108,9 @@ typedef NS_OPTIONS(NSInteger, Status) {
                                             //2、合成最后的播放字符串
                                             
                                             self.VoiceTTS = [self cleanData:[dataDic objectForKey:@"data"]];
-                                            [self testPlayVoice];
+                                            [self testPlayVoice];   //声音播放
+                                            [self sendMsgToWatch];  //手表消息
+                                            
                                             
                                             
                                             //4.屏幕显示数据
@@ -125,6 +126,87 @@ typedef NS_OPTIONS(NSInteger, Status) {
 
 -(void)sendMsgToWatch {
     
+       //1ABCD9BBCDD10AACCD22BBDDC
+       //1,
+    //数据处理
+    
+    NSMutableString  *WcleanData = [NSMutableString new];
+    
+    NSInteger alength = [self.RawData length];
+    
+    
+    for (int i = 0; i<alength; i++) {
+        char commitChar = [self.RawData characterAtIndex:i];
+        NSString *temp;
+        if(commitChar ==68) {  //把D换成F
+            temp = @"F";
+        }else {
+            temp = [self.RawData substringWithRange:NSMakeRange(i,1)];
+        }
+        
+        if(commitChar>64) {
+            //  NSLog(@"字母");
+            if(commitChar==65) {
+                temp = @"1";
+            }else if (commitChar ==66) {
+                temp =@"2";
+            }else if (commitChar==67) {
+                temp =@"3";
+            }else if (commitChar ==68) {
+                temp =@"4";
+            }
+            
+            [WcleanData appendString:temp];
+            
+            if (i != (alength-1)) {
+                char nxt_Char = [self.RawData characterAtIndex:(i + 1)];
+                if ((nxt_Char>47)&&(nxt_Char<58)) {
+                    [WcleanData appendString:@"|"];
+                }
+            }
+            
+     
+  
+            
+        }else if((commitChar>47)&&(commitChar<58)){
+            //  NSLog(@"数字");
+            
+     
+            
+            [WcleanData appendString:temp];
+            if(i>0) {
+                char preChar = [self.RawData characterAtIndex:(i - 1)];
+                char nxtChar = [self.RawData characterAtIndex:(i + 1)];
+                if(nxtChar>64) {  //如果下一个是字母，则加逗号
+                    [WcleanData appendString:@","];
+                }else {
+                    [WcleanData appendString:@"|"];  //组与组之间的间隔添加
+                    
+                    
+                }
+            } else{  //end if(i-1)>0
+                //首位的情况
+                [WcleanData appendString:@","];
+            }
+        }
+    }
+    
+
+    
+    NSLog(@"watchCLean:%@",WcleanData);
+    
+    
+    
+    if ([WCSession isSupported]) {
+        /*创建Session单例*/
+        WCSession * session = [WCSession defaultSession];
+        /*指定Session的代理*/
+        session.delegate = self;
+        /*激活当前Session*/
+        [session activateSession];
+        /*通过Session发送相关数据(Context就表示想要传递给Watch的数据)*/
+        [session updateApplicationContext:@{@"name":WcleanData} error:nil];
+    }
 }
 
 
@@ -218,11 +300,8 @@ typedef NS_OPTIONS(NSInteger, Status) {
 
 //JSON 转字典
 - (NSDictionary *)dictionaryWithJsonString:(NSString *)jsonString {
-    
     if (jsonString == nil) {
-        
         return nil;
-        
     }
     
     NSData *jsonData = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
@@ -271,7 +350,7 @@ typedef NS_OPTIONS(NSInteger, Status) {
         if(commitChar>64) {
           //  NSLog(@"字母");
             [GroupCopy appendString:temp];
-            [GroupCopy appendString:@"[p200]"];
+            [GroupCopy appendString:@"[p100]"];
             
             [cleanData appendString:temp];
             [cleanData appendString:@"[p1000]"];

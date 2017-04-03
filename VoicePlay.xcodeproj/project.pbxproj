@@ -7,6 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4600288B1E7439AC00B1FFCF /* Interface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 460028891E7439AC00B1FFCF /* Interface.storyboard */; };
+		4600288D1E7439AC00B1FFCF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4600288C1E7439AC00B1FFCF /* Assets.xcassets */; };
+		460028941E7439AD00B1FFCF /* STEPS Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 460028931E7439AD00B1FFCF /* STEPS Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		4600289C1E7439AD00B1FFCF /* InterfaceController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4600289B1E7439AD00B1FFCF /* InterfaceController.m */; };
+		4600289F1E7439AD00B1FFCF /* ExtensionDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4600289E1E7439AD00B1FFCF /* ExtensionDelegate.m */; };
+		460028A21E7439AD00B1FFCF /* NotificationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 460028A11E7439AD00B1FFCF /* NotificationController.m */; };
+		460028A41E7439AD00B1FFCF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 460028A31E7439AD00B1FFCF /* Assets.xcassets */; };
+		460028A81E7439AD00B1FFCF /* STEPS.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 460028871E7439AC00B1FFCF /* STEPS.app */; };
+		460028B21E743A9A00B1FFCF /* TableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 460028B11E743A9A00B1FFCF /* TableCell.m */; };
 		4654BE931E56EDF600802FBD /* PHP in Resources */ = {isa = PBXBuildFile; fileRef = 4654BE921E56EDF600802FBD /* PHP */; };
 		4668D2271E24AEBD000C7C34 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4668D2261E24AEBD000C7C34 /* main.m */; };
 		4668D22A1E24AEBD000C7C34 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4668D2291E24AEBD000C7C34 /* AppDelegate.m */; };
@@ -54,6 +63,20 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		460028951E7439AD00B1FFCF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4668D21A1E24AEBC000C7C34 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 460028921E7439AD00B1FFCF;
+			remoteInfo = "STEPS Extension";
+		};
+		460028A61E7439AD00B1FFCF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4668D21A1E24AEBC000C7C34 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 460028861E7439AC00B1FFCF;
+			remoteInfo = STEPS;
+		};
 		4668D23C1E24AEBD000C7C34 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 4668D21A1E24AEBC000C7C34 /* Project object */;
@@ -77,27 +100,41 @@
 			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
 			dstSubfolderSpec = 16;
 			files = (
+				460028A81E7439AD00B1FFCF /* STEPS.app in Embed Watch Content */,
 			);
 			name = "Embed Watch Content";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		460028AC1E7439AD00B1FFCF /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				460028941E7439AD00B1FFCF /* STEPS Extension.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		460028301E740B8C00B1FFCF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Interface.storyboard; sourceTree = "<group>"; };
-		460028321E740B8C00B1FFCF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		460028341E740B8C00B1FFCF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		4600283F1E740B8C00B1FFCF /* PushNotificationPayload.apns */ = {isa = PBXFileReference; lastKnownFileType = text; path = PushNotificationPayload.apns; sourceTree = "<group>"; };
-		460028401E740B8C00B1FFCF /* InterfaceController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InterfaceController.h; sourceTree = "<group>"; };
-		460028411E740B8C00B1FFCF /* InterfaceController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = InterfaceController.m; sourceTree = "<group>"; };
-		460028431E740B8C00B1FFCF /* ExtensionDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ExtensionDelegate.h; sourceTree = "<group>"; };
-		460028441E740B8C00B1FFCF /* ExtensionDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ExtensionDelegate.m; sourceTree = "<group>"; };
-		460028461E740B8C00B1FFCF /* NotificationController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NotificationController.h; sourceTree = "<group>"; };
-		460028471E740B8C00B1FFCF /* NotificationController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NotificationController.m; sourceTree = "<group>"; };
-		460028491E740B8C00B1FFCF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		4600284B1E740B8C00B1FFCF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		460028571E740CCF00B1FFCF /* TableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TableCell.h; sourceTree = "<group>"; };
-		460028581E740CCF00B1FFCF /* TableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TableCell.m; sourceTree = "<group>"; };
+		460028871E7439AC00B1FFCF /* STEPS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = STEPS.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		4600288A1E7439AC00B1FFCF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Interface.storyboard; sourceTree = "<group>"; };
+		4600288C1E7439AC00B1FFCF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		4600288E1E7439AC00B1FFCF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		460028931E7439AD00B1FFCF /* STEPS Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "STEPS Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		460028991E7439AD00B1FFCF /* PushNotificationPayload.apns */ = {isa = PBXFileReference; lastKnownFileType = text; path = PushNotificationPayload.apns; sourceTree = "<group>"; };
+		4600289A1E7439AD00B1FFCF /* InterfaceController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InterfaceController.h; sourceTree = "<group>"; };
+		4600289B1E7439AD00B1FFCF /* InterfaceController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = InterfaceController.m; sourceTree = "<group>"; };
+		4600289D1E7439AD00B1FFCF /* ExtensionDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ExtensionDelegate.h; sourceTree = "<group>"; };
+		4600289E1E7439AD00B1FFCF /* ExtensionDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ExtensionDelegate.m; sourceTree = "<group>"; };
+		460028A01E7439AD00B1FFCF /* NotificationController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NotificationController.h; sourceTree = "<group>"; };
+		460028A11E7439AD00B1FFCF /* NotificationController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NotificationController.m; sourceTree = "<group>"; };
+		460028A31E7439AD00B1FFCF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		460028A51E7439AD00B1FFCF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		460028B01E743A9A00B1FFCF /* TableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TableCell.h; sourceTree = "<group>"; };
+		460028B11E743A9A00B1FFCF /* TableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TableCell.m; sourceTree = "<group>"; };
 		4654BE921E56EDF600802FBD /* PHP */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = PHP; sourceTree = "<group>"; };
 		4668D2221E24AEBD000C7C34 /* VoicePlay.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VoicePlay.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4668D2261E24AEBD000C7C34 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -178,6 +215,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		460028901E7439AD00B1FFCF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		4668D21F1E24AEBC000C7C34 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -215,38 +259,38 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		4600282E1E740B8C00B1FFCF /* Steps */ = {
+		460028881E7439AC00B1FFCF /* STEPS */ = {
 			isa = PBXGroup;
 			children = (
-				4600282F1E740B8C00B1FFCF /* Interface.storyboard */,
-				460028321E740B8C00B1FFCF /* Assets.xcassets */,
-				460028341E740B8C00B1FFCF /* Info.plist */,
+				460028891E7439AC00B1FFCF /* Interface.storyboard */,
+				4600288C1E7439AC00B1FFCF /* Assets.xcassets */,
+				4600288E1E7439AC00B1FFCF /* Info.plist */,
 			);
-			path = Steps;
+			path = STEPS;
 			sourceTree = "<group>";
 		};
-		4600283D1E740B8C00B1FFCF /* Steps Extension */ = {
+		460028971E7439AD00B1FFCF /* STEPS Extension */ = {
 			isa = PBXGroup;
 			children = (
-				460028571E740CCF00B1FFCF /* TableCell.h */,
-				460028581E740CCF00B1FFCF /* TableCell.m */,
-				460028401E740B8C00B1FFCF /* InterfaceController.h */,
-				460028411E740B8C00B1FFCF /* InterfaceController.m */,
-				460028431E740B8C00B1FFCF /* ExtensionDelegate.h */,
-				460028441E740B8C00B1FFCF /* ExtensionDelegate.m */,
-				460028461E740B8C00B1FFCF /* NotificationController.h */,
-				460028471E740B8C00B1FFCF /* NotificationController.m */,
-				460028491E740B8C00B1FFCF /* Assets.xcassets */,
-				4600284B1E740B8C00B1FFCF /* Info.plist */,
-				4600283E1E740B8C00B1FFCF /* Supporting Files */,
+				460028B01E743A9A00B1FFCF /* TableCell.h */,
+				460028B11E743A9A00B1FFCF /* TableCell.m */,
+				4600289A1E7439AD00B1FFCF /* InterfaceController.h */,
+				4600289B1E7439AD00B1FFCF /* InterfaceController.m */,
+				4600289D1E7439AD00B1FFCF /* ExtensionDelegate.h */,
+				4600289E1E7439AD00B1FFCF /* ExtensionDelegate.m */,
+				460028A01E7439AD00B1FFCF /* NotificationController.h */,
+				460028A11E7439AD00B1FFCF /* NotificationController.m */,
+				460028A31E7439AD00B1FFCF /* Assets.xcassets */,
+				460028A51E7439AD00B1FFCF /* Info.plist */,
+				460028981E7439AD00B1FFCF /* Supporting Files */,
 			);
-			path = "Steps Extension";
+			path = "STEPS Extension";
 			sourceTree = "<group>";
 		};
-		4600283E1E740B8C00B1FFCF /* Supporting Files */ = {
+		460028981E7439AD00B1FFCF /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				4600283F1E740B8C00B1FFCF /* PushNotificationPayload.apns */,
+				460028991E7439AD00B1FFCF /* PushNotificationPayload.apns */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -257,8 +301,8 @@
 				4668D2241E24AEBD000C7C34 /* VoicePlay */,
 				4668D23E1E24AEBD000C7C34 /* VoicePlayTests */,
 				4668D2491E24AEBD000C7C34 /* VoicePlayUITests */,
-				4600282E1E740B8C00B1FFCF /* Steps */,
-				4600283D1E740B8C00B1FFCF /* Steps Extension */,
+				460028881E7439AC00B1FFCF /* STEPS */,
+				460028971E7439AD00B1FFCF /* STEPS Extension */,
 				4668D2231E24AEBD000C7C34 /* Products */,
 				4673FCEE1E2673D100574FEC /* Frameworks */,
 			);
@@ -270,6 +314,8 @@
 				4668D2221E24AEBD000C7C34 /* VoicePlay.app */,
 				4668D23B1E24AEBD000C7C34 /* VoicePlayTests.xctest */,
 				4668D2461E24AEBD000C7C34 /* VoicePlayUITests.xctest */,
+				460028871E7439AC00B1FFCF /* STEPS.app */,
+				460028931E7439AD00B1FFCF /* STEPS Extension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -411,6 +457,40 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		460028861E7439AC00B1FFCF /* STEPS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 460028AD1E7439AD00B1FFCF /* Build configuration list for PBXNativeTarget "STEPS" */;
+			buildPhases = (
+				460028851E7439AC00B1FFCF /* Resources */,
+				460028AC1E7439AD00B1FFCF /* Embed App Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				460028961E7439AD00B1FFCF /* PBXTargetDependency */,
+			);
+			name = STEPS;
+			productName = STEPS;
+			productReference = 460028871E7439AC00B1FFCF /* STEPS.app */;
+			productType = "com.apple.product-type.application.watchapp2";
+		};
+		460028921E7439AD00B1FFCF /* STEPS Extension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 460028A91E7439AD00B1FFCF /* Build configuration list for PBXNativeTarget "STEPS Extension" */;
+			buildPhases = (
+				4600288F1E7439AD00B1FFCF /* Sources */,
+				460028901E7439AD00B1FFCF /* Frameworks */,
+				460028911E7439AD00B1FFCF /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "STEPS Extension";
+			productName = "STEPS Extension";
+			productReference = 460028931E7439AD00B1FFCF /* STEPS Extension.appex */;
+			productType = "com.apple.product-type.watchkit2-extension";
+		};
 		4668D2211E24AEBC000C7C34 /* VoicePlay */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 4668D24F1E24AEBD000C7C34 /* Build configuration list for PBXNativeTarget "VoicePlay" */;
@@ -423,6 +503,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				460028A71E7439AD00B1FFCF /* PBXTargetDependency */,
 			);
 			name = VoicePlay;
 			productName = VoicePlay;
@@ -474,6 +555,16 @@
 				LastUpgradeCheck = 0730;
 				ORGANIZATIONNAME = Larry;
 				TargetAttributes = {
+					460028861E7439AC00B1FFCF = {
+						CreatedOnToolsVersion = 8.2.1;
+						DevelopmentTeam = NS9E2DSK82;
+						ProvisioningStyle = Automatic;
+					};
+					460028921E7439AD00B1FFCF = {
+						CreatedOnToolsVersion = 8.2.1;
+						DevelopmentTeam = NS9E2DSK82;
+						ProvisioningStyle = Automatic;
+					};
 					4668D2211E24AEBC000C7C34 = {
 						CreatedOnToolsVersion = 7.3.1;
 						DevelopmentTeam = NS9E2DSK82;
@@ -504,11 +595,30 @@
 				4668D2211E24AEBC000C7C34 /* VoicePlay */,
 				4668D23A1E24AEBD000C7C34 /* VoicePlayTests */,
 				4668D2451E24AEBD000C7C34 /* VoicePlayUITests */,
+				460028861E7439AC00B1FFCF /* STEPS */,
+				460028921E7439AD00B1FFCF /* STEPS Extension */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		460028851E7439AC00B1FFCF /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4600288D1E7439AC00B1FFCF /* Assets.xcassets in Resources */,
+				4600288B1E7439AC00B1FFCF /* Interface.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		460028911E7439AD00B1FFCF /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				460028A41E7439AD00B1FFCF /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		4668D2201E24AEBC000C7C34 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -538,6 +648,17 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		4600288F1E7439AD00B1FFCF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4600289F1E7439AD00B1FFCF /* ExtensionDelegate.m in Sources */,
+				4600289C1E7439AD00B1FFCF /* InterfaceController.m in Sources */,
+				460028B21E743A9A00B1FFCF /* TableCell.m in Sources */,
+				460028A21E7439AD00B1FFCF /* NotificationController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		4668D21E1E24AEBC000C7C34 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -588,6 +709,16 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		460028961E7439AD00B1FFCF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 460028921E7439AD00B1FFCF /* STEPS Extension */;
+			targetProxy = 460028951E7439AD00B1FFCF /* PBXContainerItemProxy */;
+		};
+		460028A71E7439AD00B1FFCF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 460028861E7439AC00B1FFCF /* STEPS */;
+			targetProxy = 460028A61E7439AD00B1FFCF /* PBXContainerItemProxy */;
+		};
 		4668D23D1E24AEBD000C7C34 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 4668D2211E24AEBC000C7C34 /* VoicePlay */;
@@ -601,10 +732,10 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		4600282F1E740B8C00B1FFCF /* Interface.storyboard */ = {
+		460028891E7439AC00B1FFCF /* Interface.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				460028301E740B8C00B1FFCF /* Base */,
+				4600288A1E7439AC00B1FFCF /* Base */,
 			);
 			name = Interface.storyboard;
 			sourceTree = "<group>";
@@ -628,6 +759,82 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		460028AA1E7439AD00B1FFCF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				DEVELOPMENT_TEAM = NS9E2DSK82;
+				INFOPLIST_FILE = "STEPS Extension/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.fbi.VoicePlay.watchkitapp.watchkitextension;
+				PRODUCT_NAME = "${TARGET_NAME}";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 3.1;
+			};
+			name = Debug;
+		};
+		460028AB1E7439AD00B1FFCF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				DEVELOPMENT_TEAM = NS9E2DSK82;
+				INFOPLIST_FILE = "STEPS Extension/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.fbi.VoicePlay.watchkitapp.watchkitextension;
+				PRODUCT_NAME = "${TARGET_NAME}";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 3.1;
+			};
+			name = Release;
+		};
+		460028AE1E7439AD00B1FFCF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				DEVELOPMENT_TEAM = NS9E2DSK82;
+				IBSC_MODULE = STEPS_Extension;
+				INFOPLIST_FILE = STEPS/Info.plist;
+				PRODUCT_BUNDLE_IDENTIFIER = com.fbi.VoicePlay.watchkitapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 3.1;
+			};
+			name = Debug;
+		};
+		460028AF1E7439AD00B1FFCF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				DEVELOPMENT_TEAM = NS9E2DSK82;
+				IBSC_MODULE = STEPS_Extension;
+				INFOPLIST_FILE = STEPS/Info.plist;
+				PRODUCT_BUNDLE_IDENTIFIER = com.fbi.VoicePlay.watchkitapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 3.1;
+			};
+			name = Release;
+		};
 		4668D24D1E24AEBD000C7C34 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -795,6 +1002,22 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		460028A91E7439AD00B1FFCF /* Build configuration list for PBXNativeTarget "STEPS Extension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				460028AA1E7439AD00B1FFCF /* Debug */,
+				460028AB1E7439AD00B1FFCF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		460028AD1E7439AD00B1FFCF /* Build configuration list for PBXNativeTarget "STEPS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				460028AE1E7439AD00B1FFCF /* Debug */,
+				460028AF1E7439AD00B1FFCF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
 		4668D21D1E24AEBC000C7C34 /* Build configuration list for PBXProject "VoicePlay" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

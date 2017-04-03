@@ -4,6 +4,26 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>Audi (Notification).xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>4</integer>
+		</dict>
+		<key>Audi.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>3</integer>
+		</dict>
+		<key>STEPS (Notification).xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>6</integer>
+		</dict>
+		<key>STEPS.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>5</integer>
+		</dict>
 		<key>Steps (Notification).xcscheme</key>
 		<dict>
 			<key>orderHint</key>
@@ -23,6 +43,11 @@
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
 		<key>4600282C1E740B8C00B1FFCF</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>460028861E7439AC00B1FFCF</key>
 		<dict>
 			<key>primary</key>
 			<true/>

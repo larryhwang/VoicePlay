@@ -94,7 +94,8 @@ typedef NS_OPTIONS(NSInteger, Status) {
 
 
 -(void)testNet {
-    NSString *urtString = @"http://112.74.35.79/Request.php";
+    NSLog(@"请求数据");
+    NSString *urtString = @"http://39.108.100.69/audi/Request.php";
     NSURL *url = [NSURL URLWithString:urtString];    //字符串转URL
     NSURLSession *session = [NSURLSession sharedSession];
     NSURLSessionTask *task = [session dataTaskWithURL:url
@@ -125,15 +126,11 @@ typedef NS_OPTIONS(NSInteger, Status) {
 
 
 -(void)sendMsgToWatch {
-    
        //1ABCD9BBCDD10AACCD22BBDDC
        //1,
     //数据处理
-    
     NSMutableString  *WcleanData = [NSMutableString new];
-    
     NSInteger alength = [self.RawData length];
-    
     
     for (int i = 0; i<alength; i++) {
         char commitChar = [self.RawData characterAtIndex:i];
@@ -164,15 +161,8 @@ typedef NS_OPTIONS(NSInteger, Status) {
                     [WcleanData appendString:@"|"];
                 }
             }
-            
-     
-  
-            
         }else if((commitChar>47)&&(commitChar<58)){
             //  NSLog(@"数字");
-            
-     
-            
             [WcleanData appendString:temp];
             if(i>0) {
                 char preChar = [self.RawData characterAtIndex:(i - 1)];
@@ -181,8 +171,6 @@ typedef NS_OPTIONS(NSInteger, Status) {
                     [WcleanData appendString:@","];
                 }else {
                     [WcleanData appendString:@"|"];  //组与组之间的间隔添加
-                    
-                    
                 }
             } else{  //end if(i-1)>0
                 //首位的情况
@@ -190,12 +178,7 @@ typedef NS_OPTIONS(NSInteger, Status) {
             }
         }
     }
-    
-
-    
     NSLog(@"watchCLean:%@",WcleanData);
-    
-    
     
     if ([WCSession isSupported]) {
         /*创建Session单例*/
@@ -222,7 +205,6 @@ typedef NS_OPTIONS(NSInteger, Status) {
     self.isCanceled = NO;
     
     _iFlySpeechSynthesizer.delegate = self;
-    
     
     [_iFlySpeechSynthesizer startSpeaking:self.VoiceTTS];
     if (_iFlySpeechSynthesizer.isSpeaking) {

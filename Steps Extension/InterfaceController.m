@@ -10,8 +10,12 @@
 #import "TableCell.h"
 
 #define kCellType @"cell"
+#import <WatchConnectivity/WatchConnectivity.h>
 
-@interface InterfaceController()
+@interface InterfaceController()<WCSessionDelegate>{
+      WCSession * session;
+}
+
 @property (unsafe_unretained, nonatomic) IBOutlet WKInterfaceTable *table;
 @end
 
@@ -20,16 +24,37 @@
 
 - (void)awakeWithContext:(id)context {
     [super awakeWithContext:context];
+    session = [WCSession defaultSession];
+    session.delegate = self;
+    [session activateSession];
+
+}
+- (IBAction)CLICK {
+    
+    //1,32342|2,24223|3,12323|
+
+    NSLog(@"WATCH_DATA:%@",session.receivedApplicationContext[@"name"]);
+    //分离数据成为数组
+    
+    NSString *tempALl = session.receivedApplicationContext[@"name"];
+    
+    NSArray *arr = [tempALl componentsSeparatedByString:@"|"];
+    
+    [_table setNumberOfRows:arr.count withRowType:kCellType];
+    
+    for (int  i =0; arr.count>i; i++) {
+        NSString *tmp = arr[i];
+        NSArray  *arr = [tmp componentsSeparatedByString:@","];
+        TableCell *row = [_table rowControllerAtIndex:i];
+        [row.NoLable setText:arr[0]];
+        [row.DDLable setText:arr[1]];
+    }
 
     
-    [_table setNumberOfRows:12 withRowType:kCellType];
     
-    for (int i = 0; i < 12; i++) {
-        
-        TableCell *row = [_table rowControllerAtIndex:i];
-        //  [row.DDLable setText:[_counties objectAtIndex:i]];
-        [row.DDLable setText:@"13,22314"];
-    }
+    
+    
+   
 
 }
 

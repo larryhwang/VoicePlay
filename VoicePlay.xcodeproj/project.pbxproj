@@ -812,7 +812,7 @@
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = 4;
-				WATCHOS_DEPLOYMENT_TARGET = 3.1;
+				WATCHOS_DEPLOYMENT_TARGET = 3.0;
 			};
 			name = Debug;
 		};
@@ -831,7 +831,7 @@
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = 4;
-				WATCHOS_DEPLOYMENT_TARGET = 3.1;
+				WATCHOS_DEPLOYMENT_TARGET = 3.0;
 			};
 			name = Release;
 		};
@@ -1009,6 +1009,7 @@
 				460028AB1E7439AD00B1FFCF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		460028AD1E7439AD00B1FFCF /* Build configuration list for PBXNativeTarget "STEPS" */ = {
 			isa = XCConfigurationList;
@@ -1017,6 +1018,7 @@
 				460028AF1E7439AD00B1FFCF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		4668D21D1E24AEBC000C7C34 /* Build configuration list for PBXProject "VoicePlay" */ = {
 			isa = XCConfigurationList;
